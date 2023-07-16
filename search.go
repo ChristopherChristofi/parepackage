@@ -3,14 +3,28 @@ package main
 import (
 	"log"
 	"os"
+	"bufio"
 	"strings"
 	"path/filepath"
 	"gopkg.in/yaml.v3"
 )
 
-func getRequestedPackageNames(base_dir string) (requested_packages []string){
+func getInstalledPackageNames(pkg_list_path string) (installed_packages []string){
+	list_contents, err := os.Open(pkg_list_path)
+	if err != nil {
+		log.Fatal(err)
+	}
+	contentScanner := bufio.NewScanner(list_contents)
+	contentScanner.Split(bufio.ScanLines)
 
-	requested_packages = []string{}
+	for contentScanner.Scan() {
+		installed_packages = append(installed_packages, contentScanner.Text())
+	}
+
+	return installed_packages
+}
+
+func getRequestedPackageNames(base_dir string) (requested_packages []string){
 
 	package_yamls, err := os.ReadDir(base_dir)
 	if err != nil {
