@@ -19,9 +19,7 @@ func getRequestedPackageNames(base_dir string) (requested_packages []string){
 
 	for _, file := range package_yamls {
 
-		package_name := strings.TrimSuffix(file.Name(), filepath.Ext(file.Name()))
-
-		contents, err := os.ReadFile(base_dir + file.Name())
+		contents, err := os.ReadFile(filepath.Join(base_dir, file.Name()))
 	
 		if err != nil {
 			log.Fatal(err)
@@ -33,7 +31,9 @@ func getRequestedPackageNames(base_dir string) (requested_packages []string){
 		}
 
 		versions := yaml_config["versions"].(map[string]interface{})
-		
+	
+		package_name := strings.TrimSuffix(file.Name(), filepath.Ext(file.Name()))
+
 		for version := range versions {
 			package_name_version :=  package_name + "@" + version
 			requested_packages = append(requested_packages, package_name_version)
