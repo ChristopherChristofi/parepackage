@@ -8,9 +8,8 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func getRequestedPackageNames() (requested_packages []string){
+func getRequestedPackageNames(base_dir string) (requested_packages []string){
 
-	base_dir := "data/"
 	requested_packages = []string{}
 
 	package_yamls, err := os.ReadDir(base_dir)
