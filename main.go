@@ -7,8 +7,16 @@ import (
 	"flag"
 )
 
-func main() {
+func contains (pkg string, pkg_list []string) bool {
+	for _, installed_pkg := range pkg_list {
+		if installed_pkg == pkg {
+			return true
+		}
+	}
+	return false
+}
 
+func main() {
 	var package_list string
 	var base_req_dir string
 	flag.StringVar(&package_list, "pkg-list", "data/list.txt", "path to file listing all actually installed packages on system.")
@@ -23,10 +31,9 @@ func main() {
 	requested_pkgs := getRequestedPackageNames(base_req_dir)
 
 	for _, pkg := range requested_pkgs {
-		fmt.Println(pkg)
+		if !(contains(pkg, installed_pkgs)) {
+			fmt.Println(pkg)
+		}
 	}
 
-	for _, pkg := range installed_pkgs {
-		fmt.Println(pkg)
-	}
 }
