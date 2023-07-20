@@ -5,16 +5,8 @@ import (
 	"log"
 	"fmt"
 	"flag"
+	"golang.org/x/exp/slices"
 )
-
-func contains (pkg string, pkg_list []string) bool {
-	for _, installed_pkg := range pkg_list {
-		if installed_pkg == pkg {
-			return true
-		}
-	}
-	return false
-}
 
 func main() {
 	var package_list string
@@ -31,9 +23,8 @@ func main() {
 	requested_pkgs := getRequestedPackageNames(base_req_dir)
 
 	for _, pkg := range requested_pkgs {
-		if !(contains(pkg, installed_pkgs)) {
+		if !(slices.Contains(installed_pkgs, pkg)) {
 			fmt.Println(pkg)
 		}
 	}
-
 }
