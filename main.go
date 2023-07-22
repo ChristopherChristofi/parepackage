@@ -12,7 +12,7 @@ func main() {
 	var package_list string
 	var base_req_dir string
 	flag.StringVar(&package_list, "pkg-list", "data/list.txt", "path to file listing all actually installed packages on system.")
-	flag.StringVar(&base_req_dir, "base-dir", "data", "path to base directory for requested yaml config files.")
+	flag.StringVar(&base_req_dir, "base-dir", "data/", "path to base directory for requested yaml config files.")
 	flag.Parse()
 
 	if _, err := os.Stat(base_req_dir); os.IsNotExist(err) {

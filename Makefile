@@ -6,4 +6,4 @@ build:
 	docker build --target ${build_target} . --tag ${name_tag}
 
 run:
-	docker run -it -v ${project_location}:/project ${name_tag}
+	docker run --rm -it -v ${project_location}:/project ${name_tag}
