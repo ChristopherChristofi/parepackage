@@ -82,7 +82,7 @@ func main() {
 	dir_base_requested := flag.String("base-dir", "data/", "path to base directory for requested yaml config files.")
 	flag.Parse()
 
-	if *search_command != "missing" && *search_command != "hidden" {
+	if *search_command != "missing" && *search_command != "hidden" && *search_command != "present" {
 		log.Fatal("Invalid search option: ", *search_command)
 	}
 
@@ -98,6 +98,12 @@ func main() {
 	case "hidden":
 		for _, pkg := range installed_pkgs {
 			if !(contains(pkg, requested_pkgs)) {
+				fmt.Println(pkg)
+			}
+		}
+	case "present":
+		for _, pkg := range requested_pkgs {
+			if contains(pkg, installed_pkgs) {
 				fmt.Println(pkg)
 			}
 		}
